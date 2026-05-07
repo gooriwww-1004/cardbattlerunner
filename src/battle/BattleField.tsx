@@ -130,9 +130,7 @@ export default function BattleField({
       0: '1열 ⚔️', 1: '2열 🏹', 2: '3열 🪄'
     };
     const rows = reverseRows ? [...grid].reverse() : grid;
-    const _actualRows = reverseRows
-      ? [ROWS-1, ROWS-2, 0]  // 2,1,0 순서
-      : [0, 1, ROWS-1];      // 0,1,2 순서
+    
 
     return(
       <div className="overflow-x-auto" style={{scrollbarWidth:'none'}}>
@@ -151,7 +149,6 @@ export default function BattleField({
                 const slotKey=`${side}${squad}r${ri}c${ci}`;
                 const isEnemy=side==='npc';
                 const canDrag=!isEnemy && turn==='player' && !isBusy;
-                const _canDrop=!isEnemy && turn==='player' && !isBusy && dragUid!==null;
                 const isDropEnemy=isEnemy && turn==='player' && !isBusy && dragUid!==null
                   && playerUnits.some(u=>u.uid===dragUid);
 

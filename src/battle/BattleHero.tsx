@@ -90,7 +90,7 @@ function FlamePortrait({
 
 // ── 예비 카드 가로 스크롤 ────────────────────────────────
 function ReserveStrip({
-  units, side, turn, isBusy, onAddFromReserve, onOpenModal
+  units, side, turn, isBusy, onOpenModal
 }: {
   units: BattleUnit[];
   side: 'player' | 'npc';

@@ -39,9 +39,7 @@ export default function LoadScreen({ onLoad }: Props) {
 
   // ── JSON 로드 ─────────────────────────────────────────────
   const loadJson = (text: string) => {
-    const data = JSON.parse(text);
-    onLoad(data);
-  };
+      };
 
   // ── ZIP 번들 로드 ─────────────────────────────────────────
   const loadZip = async (file: File) => {
