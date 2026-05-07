@@ -4,7 +4,7 @@
  * 50%:  1군+2군 한 화면에 표시
  * 200%+: 단일군 + 좌우 화살표 전환
  */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { BattleUnit, SpeechBubble } from './BattleEngine';
 import BattleCard, { EmptySlot } from './BattleCard';
 import type { ZoomLevel } from './BattleCard';
@@ -25,7 +25,7 @@ interface Props {
 
 // ── 말풍선 컴포넌트 (NPC / Player 분리) ──────────────────
 function SpeechBubbleBox({
-  bubble, zoom, position
+  bubble, zoom
 }: {
   bubble: SpeechBubble | null;
   zoom: ZoomLevel;
@@ -130,7 +130,7 @@ export default function BattleField({
       0: '1열 ⚔️', 1: '2열 🏹', 2: '3열 🪄'
     };
     const rows = reverseRows ? [...grid].reverse() : grid;
-    const actualRows = reverseRows
+    const _actualRows = reverseRows
       ? [ROWS-1, ROWS-2, 0]  // 2,1,0 순서
       : [0, 1, ROWS-1];      // 0,1,2 순서
 
@@ -151,7 +151,7 @@ export default function BattleField({
                 const slotKey=`${side}${squad}r${ri}c${ci}`;
                 const isEnemy=side==='npc';
                 const canDrag=!isEnemy && turn==='player' && !isBusy;
-                const canDrop=!isEnemy && turn==='player' && !isBusy && dragUid!==null;
+                const _canDrop=!isEnemy && turn==='player' && !isBusy && dragUid!==null;
                 const isDropEnemy=isEnemy && turn==='player' && !isBusy && dragUid!==null
                   && playerUnits.some(u=>u.uid===dragUid);
 

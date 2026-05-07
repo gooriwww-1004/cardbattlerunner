@@ -15,7 +15,6 @@ import LandingPage from './LandingPage';
 
 const GOLD   = "bg-gradient-to-b from-[#fbbf24] to-[#f59e0b] text-[#060410] font-bold";
 const GOLD_S = "shadow-[0_0_15px_rgba(251,191,36,0.4)]";
-const CB     = "border border-amber-400/60 bg-[#1a1625]";
 const EI: Record<string,string> = {fire:"🔥",water:"💧",wind:"🌬️",light:"✨",dark:"🌑",earth:"🪨"};
 // ── 상수 ──────────────────────────────────────────────────
 

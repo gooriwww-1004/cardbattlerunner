@@ -5,7 +5,7 @@
  *   script, narrationDir, narrationSpeed, narrationFontSize, narrationColor
  * 종료 → onComplete() 호출 → 배틀 로딩
  */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { GameMap } from './types';
 
 interface Props {

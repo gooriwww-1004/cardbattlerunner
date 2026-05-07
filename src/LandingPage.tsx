@@ -2,7 +2,7 @@
  * LandingPage.tsx — Tactical Nova 배포용 첫 화면
  * 로컬 개발(localhost)에서는 사용 안 함
  */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { RunnerExportData } from './types';
 
 const GAME_ZIP = '/TacticalNova_game00.zip'; // public 폴더에 위치
