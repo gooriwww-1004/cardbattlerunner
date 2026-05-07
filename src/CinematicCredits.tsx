@@ -5,7 +5,7 @@
  * 디자인: 🎨 재미나이 (Gemini)
  * 개발: 🔬 유리 (Claude)
  */
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // ── 크레딧 데이터 ─────────────────────────────────────────
 const CREDITS = [

@@ -7,7 +7,7 @@
  * - 카드 조합
  * - 별 → 가차
  */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import TopBar from '../TopBar';
 import type { CollectionCard, CollectionData } from './useCollection';
 import { GACHA_COST } from './useCollection';

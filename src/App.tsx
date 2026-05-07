@@ -17,7 +17,7 @@ const GOLD   = "bg-gradient-to-b from-[#fbbf24] to-[#f59e0b] text-[#060410] font
 const GOLD_S = "shadow-[0_0_15px_rgba(251,191,36,0.4)]";
 const CB     = "border border-amber-400/60 bg-[#1a1625]";
 const EI: Record<string,string> = {fire:"🔥",water:"💧",wind:"🌬️",light:"✨",dark:"🌑",earth:"🪨"};
-const AICON: Record<string,string> = {melee:"⚔️",ranged:"🏹",magic:"🪄"};
+// ── 상수 ──────────────────────────────────────────────────
 
 // 눈 파티클
 // 눈 또는 비 랜덤 효과
@@ -442,47 +442,6 @@ function DeckScreen({data,onBack}:{data:RunnerExportData;onBack:()=>void}) {
 
 // 5. 가차
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _GachaScreen({data,onBack}:{data:RunnerExportData;onBack:()=>void}) {
-  const [result,setResult]=useState<CardDefinition[]>([]);
-  const [pulling,setPulling]=useState(false);
-  const pull=(n:number)=>{
-    setPulling(true);
-    const drawn=Array.from({length:n},()=>data.cards[Math.floor(Math.random()*data.cards.length)]).filter(Boolean);
-    setTimeout(()=>{setResult(drawn);setPulling(false);},800);
-  };
-  return(
-    <div className="flex-1 flex flex-col bg-[#060410]">
-      <TopBar title="✨ 가차" onBack={onBack}/>
-      <div className="flex-1 flex flex-col items-center justify-center p-4 gap-5">
-        {result.length>0?(
-          <>
-            <div className="grid grid-cols-5 gap-1.5 w-full">
-              {result.map((c,i)=>(
-                <div key={i} className="rounded-xl overflow-hidden border-2 border-amber-400/50" style={{aspectRatio:"3/4"}}>
-                  {c.imageUrl?<img src={c.imageUrl} alt={c.name} className="w-full h-full object-cover"/>
-                    :<div className="w-full h-full bg-gradient-to-br from-amber-700 to-stone-900 flex items-center justify-center text-2xl">{EI[c.element]||"⚔️"}</div>}
-                </div>
-              ))}
-            </div>
-            <button onClick={()=>setResult([])} className="text-amber-400 text-sm underline">다시 뽑기</button>
-          </>
-        ):(
-          <>
-            <div className={`w-40 h-56 rounded-2xl ${CB} flex items-center justify-center shadow-[0_0_40px_rgba(167,139,250,0.2)] ${pulling?"animate-pulse":""}`}>
-              <span className="text-5xl">{pulling?"⏳":"🎴"}</span>
-            </div>
-            <div className="w-full flex flex-col gap-2">
-              <button onClick={()=>pull(1)} disabled={pulling} className={`w-full py-3 rounded-xl font-bold text-sm disabled:opacity-40 ${GOLD} ${GOLD_S}`}>1회 소환</button>
-              <button onClick={()=>pull(10)} disabled={pulling} className="w-full py-3 rounded-xl font-bold text-sm text-[#060410] bg-gradient-to-b from-[#a78bfa] to-[#7c3aed] disabled:opacity-40">10회 소환</button>
-              <button onClick={onBack} className="text-xs text-gray-600 underline text-center mt-1">← 돌아가기</button>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
 // 6. 설정
 function SettingsScreen({onBack}:{onBack:()=>void}) {
   const [bgm,setBgm]=useState(70);
