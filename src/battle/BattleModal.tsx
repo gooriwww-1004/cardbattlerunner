@@ -4,7 +4,7 @@
  * - 등급별 고급 액자 테두리
  * - 스킬/마법/대사 전체 표시
  */
-import React from 'react';
+// BattleModal
 import type { BattleUnit } from './BattleEngine';
 
 const EI:Record<string,string>={fire:'🔥',water:'💧',wind:'🌬️',light:'✨',dark:'🌑',earth:'🪨'};

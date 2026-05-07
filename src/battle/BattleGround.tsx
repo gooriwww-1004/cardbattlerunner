@@ -5,7 +5,7 @@
  *        음소거 버튼 정상 작동
  * 수정2: 새 레이아웃 (원형 초상화 + 대기창)
  */
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { RunnerExportData, CardDefinition, GameMap } from '../types';
 import BattleIntro   from './BattleIntro';
 import BattleField   from './BattleField';
@@ -73,7 +73,6 @@ export default function BattleGround({
   const [modalUnit,    setModalUnit]    = useState<BattleUnit|null>(null);
   const [logExpanded,  setLogExpanded]  = useState(false);
   const [modalEnabled, setModalEnabled] = useState(true); // 카드 정보창 ON/OFF
-  const [showCollection, setShowCollection] = useState(false);
   const logRef = useRef<HTMLDivElement>(null);
   const bonusApplied = useRef(false); // ← early return 앞으로 이동
 
@@ -123,8 +122,8 @@ export default function BattleGround({
   const {
     state, isAuto, setIsAuto,
     selectedUid, setSelectedUid, isBusy,
-    playerAttack, doNpcTurn,
-    placeUnit, advancePhase,
+    playerAttack,
+    placeUnit,
     reservePlayer, reserveNpc, addFromReserve,
     starPlayer, starNpc,
   } = useBattle({ playerCards, npcCards, sfxOn, speed });
@@ -296,8 +295,7 @@ export default function BattleGround({
           onClick={()=>setLogExpanded(e=>!e)}
           className={`w-full bg-black/90 px-3 py-1 text-left transition-all ${
             logExpanded ? 'max-h-40 overflow-y-auto' : 'max-h-10 overflow-hidden'
-          }`}
-          ref={logRef}>
+          }`}>
           {logExpanded
             ? state.log.slice(-15).map((l,i)=>(
                 <p key={i} className="text-[9px] text-gray-500 font-mono leading-relaxed">{l}</p>

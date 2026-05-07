@@ -7,7 +7,7 @@
  * ④ 카드 자동 배치 연출
  * ⑤ UI 활성화 → onComplete 호출
  */
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { RunnerExportData, GameMap } from '../types';
 
 interface Props {
@@ -33,7 +33,7 @@ export default function BattleIntro({ data, map, onComplete }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const bgUrl  = (map as any)?.backgroundUrl;
-  const bgmUrl = (map as any)?.bgmUrl || data.runner.titleScreen.bgmUrl;
+  const _bgmUrl = (map as any)?.bgmUrl || data.runner.titleScreen.bgmUrl;
 
   useEffect(() => {
     const seq = async () => {
@@ -175,7 +175,7 @@ export default function BattleIntro({ data, map, onComplete }: Props) {
 
       {/* 하단 진행 표시 */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-1.5">
-        {(['fade_bg','show_field','show_lines','place_cards','activate'] as IntroPhase[]).map((p,i)=>(
+        {(['fade_bg','show_field','show_lines','place_cards','activate'] as IntroPhase[]).map((p)=>(
           <div key={p} className={`rounded-full transition-all duration-300 ${
             phase===p?"w-4 h-1.5 bg-amber-400":"w-1.5 h-1.5 bg-gray-700"
           }`}/>
@@ -188,7 +188,8 @@ export default function BattleIntro({ data, map, onComplete }: Props) {
 // ── 유틸 ─────────────────────────────────────────────────
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-function fadeVolume(audio: HTMLAudioElement, from: number, to: number, duration: number) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _fadeVolume(audio: HTMLAudioElement, from: number, to: number, duration: number) {
   const steps = 20;
   const step  = (to - from) / steps;
   const interval = duration / steps;

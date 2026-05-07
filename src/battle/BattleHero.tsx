@@ -5,7 +5,7 @@
  * - 별 게이지 (기본 구조)
  * - 카드 클릭 → 모달
  */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { BattleUnit } from './BattleEngine';
 import type { CardDefinition } from '../types';
@@ -146,7 +146,7 @@ export default function BattleHero({
   npcHeroId,
   reservePlayer, reserveNpc,
   starPlayer, starNpc,
-  turn, isBusy, side, onOpenModal, onAddFromReserve,
+  turn, isBusy, side, _onOpenModal, onAddFromReserve,
   onOpenCollection,
 }: Props) {
   const [modalUnit, setModalUnit] = useState<BattleUnit|null>(null);
