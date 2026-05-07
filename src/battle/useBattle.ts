@@ -6,7 +6,7 @@
  */
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { CardDefinition } from '../types';
-import type { BattleState, BattleUnit, StatusEffect, SpeechBubble } from './BattleEngine';
+import type { BattleState, BattleUnit, SpeechBubble } from './BattleEngine';
 import {
   initBattleState, calcDamage, tryTriggerSkill, getElemMul,
   applyDamage, applyHeal, applyStatus, tickStatuses,
@@ -225,9 +225,8 @@ function showMultiDmg(el:HTMLElement, dmg:number, type:'melee'|'ranged'|'magic')
   const cx = r.left + r.width/2;
   const cy = r.top  + r.height*0.2;
 
-  type Step = {val:number; size:number; delay:number};
-
-  let steps: Step[] = [];
+  interface DmgStep {val:number; size:number; delay:number}
+  let steps: DmgStep[] = [];
 
   if(type==='melee'){
     // 3단계: 절반 + 절반 + 전체(x8)
@@ -348,7 +347,7 @@ export function useBattle({playerCards,npcCards,sfxOn=true,speed=2}:UseBattlePro
 
   // ── 별 게이지 ────────────────────────────────────────────
   const [starPlayer, setStarPlayer] = useState(0);
-  const [starNpc,    setStarNpc]    = useState(0);
+  const [starNpc,    _setStarNpc]   = useState(0);
   const busyRef=useRef(false);
   const stateRef=useRef(state);
   useEffect(()=>{stateRef.current=state;},[state]);
@@ -356,7 +355,7 @@ export function useBattle({playerCards,npcCards,sfxOn=true,speed=2}:UseBattlePro
   const addLog=(msg:string)=>setState(s=>({...s,log:[...s.log.slice(-60),msg]}));
 
   // ── 말풍선 추가 ───────────────────────────────────────────
-  const addBubbleRef = useRef((uid:string, text:string, type:SpeechBubble['type'], side:'player'|'npc')=>{});
+  const addBubbleRef = useRef((_uid:string, _text:string, _type:SpeechBubble['type'], _side:'player'|'npc')=>{});
   addBubbleRef.current = (uid:string, text:string, type:SpeechBubble['type'], side:'player'|'npc')=>{
     if(!text?.trim()) return;
     const bubble:SpeechBubble={uid,text,type,side,expires:Date.now()+3500};
