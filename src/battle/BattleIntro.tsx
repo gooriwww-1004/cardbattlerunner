@@ -33,7 +33,7 @@ export default function BattleIntro({ data, map, onComplete }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const bgUrl  = (map as any)?.backgroundUrl;
-  const _bgmUrl = (map as any)?.bgmUrl || data.runner.titleScreen.bgmUrl;
+  // bgmUrl은 BattleGround에서 관리 (미사용)
 
   useEffect(() => {
     const seq = async () => {
@@ -188,17 +188,4 @@ export default function BattleIntro({ data, map, onComplete }: Props) {
 // ── 유틸 ─────────────────────────────────────────────────
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _fadeVolume(audio: HTMLAudioElement, from: number, to: number, duration: number) {
-  const steps = 20;
-  const step  = (to - from) / steps;
-  const interval = duration / steps;
-  let current = from;
-  const timer = setInterval(() => {
-    current += step;
-    audio.volume = Math.min(1, Math.max(0, current));
-    if ((step > 0 && current >= to) || (step < 0 && current <= to)) {
-      clearInterval(timer);
-    }
-  }, interval);
-}
+// fadeVolume: 다음 버전에서 사용 예정

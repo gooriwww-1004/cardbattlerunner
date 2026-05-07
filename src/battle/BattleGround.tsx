@@ -1,28 +1,21 @@
-/**
- * BattleGround.tsx v2
- * 수정1: 오디오 BattleGround에서 중앙 관리
- *        나가기/재시작 시 완전 정지
- *        음소거 버튼 정상 작동
- * 수정2: 새 레이아웃 (원형 초상화 + 대기창)
- */
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import type { RunnerExportData, CardDefinition, GameMap } from '../types';
 import BattleIntro   from './BattleIntro';
 import BattleField   from './BattleField';
 import './battle.css';
 import BattleHero    from './BattleHero';
-
-// UI 클릭음
-const playUiSfx=()=>{
-  try{const a=new Audio('/assets/audio/btn_sound01.mp3');a.volume=0.4;a.play().catch(()=>{});}catch{}
-};
 import BattleModal   from './BattleModal';
 import { useBattle } from './useBattle';
 import type { BattleUnit } from './BattleEngine';
 import type { ZoomLevel } from './BattleCard';
 import type { CollectionData } from '../CollectionScreen/useCollection';
 
-// ── 모듈 레벨 오디오 싱글톤 (중복 방지) ──────────────────
+// UI 클릭음
+const playUiSfx=()=>{
+  try{const a=new Audio('/assets/audio/btn_sound01.mp3');a.volume=0.4;a.play().catch(()=>{});}catch{}
+};
+
+// ── 모듈 레벨 오디오 싱글톤 ───────────────────────────────
 let _bgm: HTMLAudioElement | null = null;
 function stopGlobalBgm() {
   if (_bgm) { _bgm.pause(); _bgm.src = ''; _bgm = null; }
@@ -37,9 +30,6 @@ function playGlobalBgm(url: string, volume: number) {
 function setGlobalMute(muted: boolean) {
   if (_bgm) _bgm.muted = muted;
 }
-function setGlobalVolume(v: number) {
-  if (_bgm) _bgm.volume = Math.max(0, Math.min(1, v));
-}
 
 interface Props {
   data:   RunnerExportData;
@@ -48,7 +38,7 @@ interface Props {
   playerCards?: CardDefinition[];
   onAddStars?: (n:number) => void;
   onHeroBonus?: (stat:'attack'|'defense', amount:number) => void;
-  onOpenCollection?: () => void;   // App 레벨 컬렉션 오버레이 열기
+  onOpenCollection?: () => void;
   collectionData: CollectionData;
   onSetHeroName: (name:string) => void;
   onSetHeroCard: (uid:string) => void;
@@ -63,16 +53,22 @@ export default function BattleGround({
   data, map, onBack,
   playerCards: propPlayerCards,
   onAddStars, onHeroBonus, onOpenCollection,
-  collectionData, onSetHeroName, onSetHeroCard,
-  onToggleDeck, onCombine, onGacha, onUpgradeStat, stars,
+  collectionData: _collectionData,
+  onSetHeroName: _onSetHeroName,
+  onSetHeroCard: _onSetHeroCard,
+  onToggleDeck: _onToggleDeck,
+  onCombine: _onCombine,
+  onGacha: _onGacha,
+  onUpgradeStat: _onUpgradeStat,
+  stars: _stars,
 }: Props) {
   const [introDone,    setIntroDone]    = useState(false);
   const [zoom,         setZoom]         = useState<ZoomLevel>(200);
-  const [sfxOn,        setSfxOn]        = useState(true);
+  const [sfxOn]                         = useState(true);
   const [muted,        setMuted]        = useState(false);
   const [modalUnit,    setModalUnit]    = useState<BattleUnit|null>(null);
   const [logExpanded,  setLogExpanded]  = useState(false);
-  const [modalEnabled, setModalEnabled] = useState(true); // 카드 정보창 ON/OFF
+  const [modalEnabled, setModalEnabled] = useState(true);
   const logRef = useRef<HTMLDivElement>(null);
   const bonusApplied = useRef(false); // ← early return 앞으로 이동
 

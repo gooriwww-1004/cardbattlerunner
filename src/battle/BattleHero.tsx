@@ -146,7 +146,7 @@ export default function BattleHero({
   npcHeroId,
   reservePlayer, reserveNpc,
   starPlayer, starNpc,
-  turn, isBusy, side, _onOpenModal, onAddFromReserve,
+  turn, isBusy, side, onOpenModal: _onOpenModal, onAddFromReserve: _onAddFromReserve,
   onOpenCollection,
 }: Props) {
   const [modalUnit, setModalUnit] = useState<BattleUnit|null>(null);
