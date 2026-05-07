@@ -38,9 +38,7 @@ export default function LoadScreen({ onLoad }: Props) {
   const [showCredits, setShowCredits] = useState(false);
 
   // ── JSON 로드 ─────────────────────────────────────────────
-  const loadJson = (text: string) => {
-      };
-
+  
   // ── ZIP 번들 로드 ─────────────────────────────────────────
   const loadZip = async (file: File) => {
     setProgress('JSZip 로딩...');
