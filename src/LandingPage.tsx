@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import type { RunnerExportData } from './types';
 
-const GAME_ZIP = 'https://github.com/gooriwww-1004/cardbattlerunner/releases/download/TacticalNova_game.v1/TacticalNova_game00.zip';
+const GAME_ZIP = 'https://cardbattlerunner-patch.netlify.app/TacticalNova_game00.zip';
 
 interface Props {
   onLoad: (data: RunnerExportData) => void;
